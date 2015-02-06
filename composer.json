@@ -7,6 +7,8 @@
             "email": "capilano.sukohi@gmail.com"
         }
     ],
+    "license": "MIT", 
+    "version": "1.0.0",
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "4.2.*"
