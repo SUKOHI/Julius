@@ -54,9 +54,9 @@ Usage
 		->setDayLabels(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'])	// Set week day names
 		->setMonthLabels(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])	// Set month names
 		->setInterval('+10 minutes')	// Set interval minutes for week and day mode
-		->setEvents($events, $callback = function($event, $start_dt, $end_dt){	// Set events and its callback function(Callback is optional)
+		->setEvents($events, $callback = function($events, $start_dt, $end_dt){	// Set events and its callback function(Callback is optional)
 			
-			$html =  '<pre>'. print_r($event, true) .'</pre>';
+			$html =  '<pre>'. print_r($events, true) .'</pre>';
 			$html .= '<pre>'. print_r($start_dt, true) .'</pre>';
 			$html .= '<pre>'. print_r($end_dt, true) .'</pre>';
 			return $html;
