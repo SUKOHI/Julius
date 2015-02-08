@@ -426,8 +426,9 @@ class Julius {
  	 		($direction == 'prev') ? $dt->subMonth() : $dt->addMonth();
  	 	
  	 	}
- 	 	 
- 	 	$url = Request::url() .'?base_date='. $dt->format('Y-m-d') .'&'. http_build_query(Input::except('base_date'));
+ 	 	
+ 	 	$base_date = ($this->mode == 'month') ? $dt->format('Y-m') : $dt->format('Y-m-d');
+ 	 	$url = Request::url() .'?base_date='. $base_date .'&'. http_build_query(Input::except('base_date'));
  	 	$class = (isset($this->classes[$direction])) ? ' class="'. $this->classes[$direction] .'"' : '';
  	 	return '<a href="'. $url .'"'. $class .'>'. $this->icons[$direction] .'</a>';
  	 	
