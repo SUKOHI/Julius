@@ -277,7 +277,8 @@ class Julius {
  	 		
  	 		for($j = 0; $j <= 6; $j++) {
 			
- 	 			$html .= '<td data-datetime="'. $dt->format('Y-m-d') .'"'. $this->classes['today'] .'>';
+ 	 			$today_class = ($dt->isToday()) ? ' class="'. $this->classes['today'] .'"' : '';
+ 	 			$html .= '<td data-datetime="'. $dt->format('Y-m-d') .'"'. $today_class .'>';
  	 			$html .= $this->wraps['date'][0];
  	 			
  	 			if($dt->month == $this->base_dt->month && ($i > 0 || $j >= $start_week_day)) {
