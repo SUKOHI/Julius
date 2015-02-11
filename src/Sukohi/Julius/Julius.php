@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Request;
 class Julius {
 
 	private $base_dt, $event_callback = null;
-	private $navigation_flag = true;
+	private $navigation_flag, $day_of_week_flag = true;
 	private $html = '';
 	private $mode = 'month';
 	private $interval = '+30 minutes';
@@ -67,6 +67,13 @@ class Julius {
  	 public function showNavigation($boolean) {
  	 	
  	 	$this->navigation_flag = $boolean;
+ 	 	return $this;
+ 	 	
+ 	 }
+ 	 
+ 	 public function showDayOfWeek($boolean) {
+
+ 	 	$this->day_of_week_flag = $boolean;
  	 	return $this;
  	 	
  	 }
@@ -188,11 +195,11 @@ class Julius {
  	 	
  	 	if($this->mode != 'day' && $this->mode != 'week') {
  	 		
- 	 		$html .= '<tr class="' . $this->classes['day_label'] .'">';
+ 	 		$html .= '<tr>';
  	 	
  	 		for($i = 0; $i < 7; $i++) {
  	 			
- 	 			$html .= '<td>'. $this->day_labels[$i] .'</td>';
+ 	 			$html .= '<td'. $this->dayLabelClass($i) .'>'. $this->day_labels[$i] .'</td>';
  	 			
  	 		}
  	 	
@@ -200,7 +207,8 @@ class Julius {
  	 		
  	 	}
  	 	
- 	 	if($this->mode == 'day' || $this->mode == 'week') {
+ 	 	if($this->day_of_week_flag && 
+ 	 			($this->mode == 'day' || $this->mode == 'week')) {
  	 		
  	 		$html .= $this->generateWeekLabels();
  	 		
@@ -229,7 +237,7 @@ class Julius {
  	 					->lastOfMonth()
  	 					->day;
  	 	
- 	 	$html = '<tr class="'. $this->classes['day_label'] .'">';
+ 	 	$html = '<tr>';
  	 	$html .= '<td>&nbsp;</td>';
  	 	
  	 	for($i = 0; $i < $count; $i++) {
@@ -252,7 +260,7 @@ class Julius {
  	 			
  	 		}
 
- 	 		$html .= '<td colspan="'. $col_span .'">';
+ 	 		$html .= '<td colspan="'. $col_span .'"'. $this->dayLabelClass($i) .'>';
  	 		$html .= $this->day_labels[$day_number] . ' ';
  	 		$html .= intval($day);
  	 		$html .= '</td>';
@@ -464,6 +472,28 @@ class Julius {
  	 	}
  	 	
  	 	return $html;
+ 	 	
+ 	 }
+ 	 
+ 	 private function dayLabelClass($week_day_no) {
+ 	 	
+ 	 	$day_label_class = '';
+
+ 	 	if(isset($this->classes['day_label'])) {
+ 	 			
+ 	 		if(!is_array($this->classes['day_label'])) {
+ 	 	
+ 	 			$day_label_class = ' class="'. $this->classes['day_label'] .'"';
+ 	 	
+ 	 		} else if(isset($this->classes['day_label'][$week_day_no])) {
+ 	 	
+ 	 			$day_label_class = ' class="'. $this->classes['day_label'][$week_day_no] .'"';
+ 	 	
+ 	 		}
+ 	 			
+ 	 	}
+ 	 	
+ 	 	return $day_label_class;
  	 	
  	 }
 

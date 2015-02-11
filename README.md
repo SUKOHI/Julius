@@ -31,6 +31,7 @@ Usage
 
 	$julius->setStartDate(Input::get('base_date'))	//Set base date
 		->showNavigation(true)	// Show or hide the navigation
+		->showDayOfWeek(true)	// Show or hide the day of week for "week" or "day" mode.
 		->setMode(Input::get('mode'))	// month, week or day
 		->setHours('8:10', '18:20')	// Set the hour range for day and week mode
 		->setClasses([	// Set classes
@@ -39,7 +40,7 @@ Usage
 				'time' => 'time', 
 				'prev' => 'btn', 
 				'next' => 'btn', 
-				'day_label' => 'text-success', 
+				'day_label' => 'text-success', // You can use array like ['0' => 'sunday-class', '6' => 'saturday-class']
 				'today' => 'text-danger'
 		])
 		->setWraps([	// Set wrapers
