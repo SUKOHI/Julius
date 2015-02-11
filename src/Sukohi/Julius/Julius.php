@@ -346,7 +346,7 @@ class Julius {
  	 			
  	 			$html .= '<td data-datetime="'. $dt .'">';
  	 			$html .= $this->wraps['date'][0];
- 	 			$html .= $this->generateEvents($dt, $dt->copy()->addMinutes(($intervalMinutes-1)));
+ 	 			$html .= $this->generateEvents($dt, $dt->copy()->addMinutes($intervalMinutes));
  	 			$html .= $this->wraps['date'][1];
  	 			$html .= '</td>';
  	 			$dt->addDay();
@@ -381,7 +381,7 @@ class Julius {
 			$html .= '</td>';
 			$html .= '<td colspan="3" data-datetime="'. $dt .'">';
 			$html .= $this->wraps['date'][0];
-			$html .= $this->generateEvents($dt, $dt->copy()->addMinutes(($intervalMinutes-1)));
+			$html .= $this->generateEvents($dt, $dt->copy()->addMinutes($intervalMinutes));
 			$html .= $this->wraps['date'][1];
 			$html .= '</td>';
 			$html .= '</tr>';
@@ -442,7 +442,7 @@ class Julius {
  	 		
  	 		$event_dt = new Carbon($date);
  	 		
- 	 		if($event_dt->between($start_dt, $end_dt)) {
+ 	 		if($event_dt->between($start_dt, $end_dt->subSecond())) {
  	 			
  	 			if($this->event_callback != null) {
  	 				
