@@ -321,34 +321,31 @@ class Julius {
  	 	
  	 	$html = '';
  	 	$intervalMinutes = $this->getIntervalMinutes();
- 	 	
- 	 	for($i = $this->hours['start']; $i < $this->hours['end']; $i++) {
 
- 	 		$minutes_count = ceil(60/$intervalMinutes);
+ 	 	$start_dt = new Carbon($this->base_dt->format('Y-m-d') .' '. $this->hours['start']);
+ 	 	$end_dt = new Carbon($this->base_dt->format('Y-m-d') .' '. $this->hours['end']);
+		$block_count = $start_dt->diffInMinutes($end_dt) / $intervalMinutes;
+
+ 	 	for ($i = 0; $i < $block_count; $i++) {
  	 		
- 	 		for($j = 0; $j < $minutes_count; $j++) {
-
- 	 			$dt = $this->base_dt
- 	 						->copy()
- 	 						->addHours($i)
- 	 						->addMinutes($intervalMinutes * $j);
- 	 			$html .= '<tr>';
- 	 			$html .= '<td class="'. $this->classes['time'] .'">'. $dt->format($this->date_formats['time']) .'</td>';
+ 	 		$dt = $start_dt->copy()->addMinutes($intervalMinutes * $i);
+ 	 		$html .= '<tr>';
+ 	 		$html .= '<td class="'. $this->classes['time'] .'">';
+ 	 		$html .= $dt->format($this->date_formats['time']);
+ 	 		$html .= '</td>';
+ 	 		
+			for ($j = 0; $j < 7; $j++) {
  	 			
- 	 			for($k = 0; $k < 7; $k++) {
- 	 				
- 	 				$dt->addDays($k);
- 	 				$html .= '<td data-datetime="'. $dt .'">';
- 	 				$html .= $this->wraps['date'][0];
- 	 				$html .= $this->generateEvents($dt, $dt->copy()->addMinutes($intervalMinutes));
- 	 				$html .= $this->wraps['date'][1];
- 	 				$html .= '</td>';
- 	 				
- 	 			}
- 	 			
- 	 			$html .= '</tr>';
+ 	 			$html .= '<td data-datetime="'. $dt .'">';
+ 	 			$html .= $this->wraps['date'][0];
+ 	 			$html .= $this->generateEvents($dt, $dt->copy()->addMinutes(($intervalMinutes-1)));
+ 	 			$html .= $this->wraps['date'][1];
+ 	 			$html .= '</td>';
+ 	 			$dt->addDay();
  	 			
  	 		}
+ 	 			
+			$html .= '</tr>';
  	 		
  	 	}
  	 	
@@ -363,26 +360,24 @@ class Julius {
 		$html = '';
 		$intervalMinutes = $this->getIntervalMinutes();
 		
-		for($i = $this->hours['start']; $i < $this->hours['end']; $i++) {
-			
-			$minutes_count = ceil(60/$intervalMinutes);
-			
-			for($j = 0; $j < $minutes_count; $j++) {
-
-				$dt = $this->base_dt->copy()
-							->addHours($i)
-							->addMinutes($intervalMinutes * $j);
-				$html .= '<tr>';
-				$html .= '<td class="'. $this->classes['time'] .'">' . $dt->format($this->date_formats['time']) . '</td>';
-				$html .= '<td colspan="3" data-datetime="'. $dt .'">';
- 				$html .= $this->wraps['date'][0];
- 				$html .= $this->generateEvents($dt, $dt->copy()->addMinutes($intervalMinutes));
- 				$html .= $this->wraps['date'][1];
-				$html .= '</td>';
-				$html .= '</tr>';
-				
-			}
-			
+		$start_dt = new Carbon($this->base_dt->format('Y-m-d') .' '. $this->hours['start']);
+		$end_dt = new Carbon($this->base_dt->format('Y-m-d') .' '. $this->hours['end']);
+		$block_count = $start_dt->diffInMinutes($end_dt) / $intervalMinutes;
+		
+		for ($i = 0; $i < $block_count; $i++) {
+			 
+			$dt = $start_dt->copy()->addMinutes($intervalMinutes * $i);
+			$html .= '<tr>';
+			$html .= '<td class="'. $this->classes['time'] .'">';
+			$html .= $dt->format($this->date_formats['time']);
+			$html .= '</td>';
+			$html .= '<td colspan="3" data-datetime="'. $dt .'">';
+			$html .= $this->wraps['date'][0];
+			$html .= $this->generateEvents($dt, $dt->copy()->addMinutes(($intervalMinutes-1)));
+			$html .= $this->wraps['date'][1];
+			$html .= '</td>';
+			$html .= '</tr>';
+			 
 		}
 		
 		$html .= '</tbody>';
@@ -395,17 +390,6 @@ class Julius {
  	 	
  	 	$dt = new Carbon('today '. $this->interval);
  	 	$diff_minutes = $dt->diffInMinutes(Carbon::today());
- 	 
- 	 	if($diff_minutes >= 60) {
- 	 		
- 	 		return 60;
- 	 		
- 	 	} else if($diff_minutes >= 30) {
- 	 		
- 	 		return 30;
- 	 		
- 	 	}
- 	 	
  	 	return $diff_minutes;
  	 	
  	 }

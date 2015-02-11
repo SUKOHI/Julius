@@ -32,7 +32,7 @@ Usage
 	$julius->setStartDate(Input::get('base_date'))	//Set base date
 		->showNavigation(true)	// Show or hide the navigation
 		->setMode(Input::get('mode'))	// month, week or day
-		->setHours(8, 20)	// Set the hour range for day and week mode
+		->setHours('8:10', '18:20')	// Set the hour range for day and week mode
 		->setClasses([	// Set classes
 				'table' => 'table table-bordered', 
 				'header' => 'table-header', 
@@ -53,7 +53,7 @@ Usage
 		])
 		->setDayLabels(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'])	// Set week day names
 		->setMonthLabels(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])	// Set month names
-		->setInterval('+10 minutes')	// Set interval minutes for week and day mode
+		->setInterval('+10 minutes')	// e.g.) +3 hours, +30minites etc...
 		->setEvents($events, $callback = function($events, $start_dt, $end_dt){	// Set events and its callback function(Callback is optional)
 			
 			$html =  '<pre>'. print_r($events, true) .'</pre>';
