@@ -160,9 +160,9 @@ class Julius {
  	 	$month = $this->month_labels[$this->base_dt->month - 1];
  	 	$year_month = str_replace(['Y', 'm'], [$year, $month], $this->date_formats['year_month']);
  	 	
- 	 	$html = '<table class="'. $this->classes['table'] .'">';
+ 	 	$html = '<table'. $this->generateClass($this->classes['table']) .'>';
  	 	$html .= '<thead>';
- 	 	$html .= '<tr class="'. $this->classes['header'] .'">';
+ 	 	$html .= '<tr'. $this->generateClass($this->classes['header']) .'>';
  	 	
  	 	if($this->mode == 'week' || $this->mode == 'day') {
  	 		
@@ -176,7 +176,7 @@ class Julius {
  	 		$html .= '<th>';
  	 		$html .= $this->generateLink('prev');
  	 		$html .= '</th>';
- 	 		$html .= '<th colspan="'. $colspan .'">';
+ 	 		$html .= '<th colspan="'. $colspan .'"'. $this->generateClass($this->classes['year_month']) .'>';
  	 		$html .= $year_month;
  	 		$html .= '</th>';
  	 		$html .= '<th>';
@@ -285,7 +285,7 @@ class Julius {
  	 		
  	 		for($j = 0; $j <= 6; $j++) {
 			
- 	 			$today_class = ($dt->isToday()) ? ' class="'. $this->classes['today'] .'"' : '';
+ 	 			$today_class = ($dt->isToday()) ? $this->generateClass($this->classes['today']) : '';
  	 			$html .= '<td data-datetime="'. $dt->format('Y-m-d') .'"'. $today_class .'>';
  	 			$html .= $this->wraps['date'][0];
  	 			
@@ -338,7 +338,7 @@ class Julius {
  	 		
  	 		$dt = $start_dt->copy()->addMinutes($intervalMinutes * $i);
  	 		$html .= '<tr>';
- 	 		$html .= '<td class="'. $this->classes['time'] .'">';
+ 	 		$html .= '<td'. $this->generateClass($this->classes['time']) .'>';
  	 		$html .= $dt->format($this->date_formats['time']);
  	 		$html .= '</td>';
  	 		
@@ -376,7 +376,7 @@ class Julius {
 			 
 			$dt = $start_dt->copy()->addMinutes($intervalMinutes * $i);
 			$html .= '<tr>';
-			$html .= '<td class="'. $this->classes['time'] .'">';
+			$html .= '<td'. $this->generateClass($this->classes['time']) .'>';
 			$html .= $dt->format($this->date_formats['time']);
 			$html .= '</td>';
 			$html .= '<td colspan="3" data-datetime="'. $dt .'">';
@@ -422,7 +422,7 @@ class Julius {
  	 	
  	 	$base_date = ($this->mode == 'month') ? $dt->format('Y-m') : $dt->format('Y-m-d');
  	 	$url = Request::url() .'?base_date='. $base_date .'&'. http_build_query(Input::except('base_date'));
- 	 	$class = (isset($this->classes[$direction])) ? ' class="'. $this->classes[$direction] .'"' : '';
+ 	 	$class = (isset($this->classes[$direction])) ? $this->generateClass($this->classes[$direction]) : '';
  	 	return '<a href="'. $url .'"'. $class .'>'. $this->icons[$direction] .'</a>';
  	 	
  	 }
@@ -483,17 +483,23 @@ class Julius {
  	 			
  	 		if(!is_array($this->classes['day_label'])) {
  	 	
- 	 			$day_label_class = ' class="'. $this->classes['day_label'] .'"';
+ 	 			$day_label_class = $this->generateClass($this->classes['day_label']);
  	 	
  	 		} else if(isset($this->classes['day_label'][$week_day_no])) {
- 	 	
- 	 			$day_label_class = ' class="'. $this->classes['day_label'][$week_day_no] .'"';
+
+ 	 			$day_label_class = $this->generateClass($this->classes['day_label'][$week_day_no]);
  	 	
  	 		}
  	 			
  	 	}
  	 	
  	 	return $day_label_class;
+ 	 	
+ 	 }
+ 	 
+ 	 private function generateClass($class) {
+ 	 	
+ 	 	return (!empty($class)) ? ' class="'. $class .'"' : '';
  	 	
  	 }
 

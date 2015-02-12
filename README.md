@@ -41,7 +41,8 @@ Usage
 				'prev' => 'btn', 
 				'next' => 'btn', 
 				'day_label' => 'text-success', // You can use array like ['0' => 'sunday-class', '6' => 'saturday-class']
-				'today' => 'text-danger'
+				'today' => 'text-danger',
+				'year_month' => 'text-center'
 		])
 		->setWraps([	// Set wrapers
 				'event' => ['<p>', '</p>'], 
