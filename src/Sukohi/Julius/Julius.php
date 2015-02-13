@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Request;
 class Julius {
 
 	private $base_dt, $event_callback = null;
-	private $navigation_flag, $day_of_week_flag = true;
+	private $navigation_flag = true;
+	private $day_of_week_flag = true;
+	private $navigation_bar_flag = true;
 	private $html = '';
 	private $mode = 'month';
 	private $interval = '+30 minutes';
@@ -76,6 +78,13 @@ class Julius {
 	public function getStartDate() {
 		
 		return $this->base_dt;
+		
+	}
+	
+	public function showNavigationBar($boolean) {
+		
+		$this->navigation_bar_flag = $boolean;
+		return $this;
 		
 	}
 	
@@ -176,36 +185,42 @@ class Julius {
 		$year_month = str_replace(['Y', 'm'], [$year, $month], $this->date_formats['year_month']);
 		
 		$html = '<table'. $this->generateClass($this->classes['table']) .'>';
-		$html .= '<thead>';
-		$html .= '<tr'. $this->generateClass($this->classes['header']) .'>';
 		
-		if($this->mode == 'week' || $this->mode == 'day') {
+		if($this->navigation_bar_flag) {
+		
+			$html .= '<thead>';
+			$html .= '<tr'. $this->generateClass($this->classes['header']) .'>';
 			
-			$html .= '<th>&nbsp;</th>';
+			if($this->mode == 'week' || $this->mode == 'day') {
+				
+				$html .= '<th>&nbsp;</th>';
+				
+			}
 			
+			if($this->navigation_flag) {
+	
+				$colspan = ($this->mode == 'day') ? 1 : 5;
+				$html .= '<th>';
+				$html .= $this->generateLink('prev');
+				$html .= '</th>';
+				$html .= '<th colspan="'. $colspan .'"'. $this->generateClass($this->classes['year_month']) .'>';
+				$html .= $year_month;
+				$html .= '</th>';
+				$html .= '<th>';
+				$html .= $this->generateLink('next');
+				$html .= '</th>';
+				
+			} else {
+				
+				$html .= '<th colspan="7">'.  $year_month .'</th>';
+				
+			}
+			
+			$html .= '</tr>';
+			$html .= '</thead>';
+		
 		}
 		
-		if($this->navigation_flag) {
-
-			$colspan = ($this->mode == 'day') ? 1 : 5;
-			$html .= '<th>';
-			$html .= $this->generateLink('prev');
-			$html .= '</th>';
-			$html .= '<th colspan="'. $colspan .'"'. $this->generateClass($this->classes['year_month']) .'>';
-			$html .= $year_month;
-			$html .= '</th>';
-			$html .= '<th>';
-			$html .= $this->generateLink('next');
-			$html .= '</th>';
-			
-		} else {
-			
-			$html .= '<th colspan="7">'.  $year_month .'</th>';
-			
-		}
-		
-		$html .= '</tr>';
-		$html .= '</thead>';
 		$html .= '<tbody>';
 		
 		if($this->mode != 'day' && $this->mode != 'week') {
