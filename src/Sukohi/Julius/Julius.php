@@ -13,7 +13,16 @@ class Julius {
 	private $interval = '+30 minutes';
 	private $hours, $events = [];
 	private $day_labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-	private $classes = ['table' => '', 'header' => '', 'time' => '', 'prev' => '', 'next' => '', 'day_label' => '', 'today' => ''];
+	private $classes = [
+				'table' => '', 
+				'header' => '', 
+				'time' => '', 
+				'prev' => '', 
+				'next' => '', 
+				'day_label' => '', 
+				'today' => '', 
+				'day' => ''
+			];
 	private $wraps = [
 				'event' => ['', ''], 
 				'day' => ['', ''], 
@@ -199,7 +208,7 @@ class Julius {
  	 	
  	 		for($i = 0; $i < 7; $i++) {
  	 			
- 	 			$html .= '<td'. $this->dayLabelClass($i) .'>'. $this->day_labels[$i] .'</td>';
+ 	 			$html .= '<td'. $this->weekDayClass('day_label', $i) .'>'. $this->day_labels[$i] .'</td>';
  	 			
  	 		}
  	 	
@@ -260,7 +269,7 @@ class Julius {
  	 			
  	 		}
 
- 	 		$html .= '<td colspan="'. $col_span .'"'. $this->dayLabelClass($i) .'>';
+ 	 		$html .= '<td colspan="'. $col_span .'"'. $this->weekDayClass('day_label', $i) .'>';
  	 		$html .= $this->day_labels[$day_number] . ' ';
  	 		$html .= intval($day);
  	 		$html .= '</td>';
@@ -290,9 +299,21 @@ class Julius {
  	 			$html .= $this->wraps['date'][0];
  	 			
  	 			if($dt->month == $this->base_dt->month && ($i > 0 || $j >= $start_week_day)) {
+
+ 	 				$html .= $this->wraps['day'][0];
+ 	 				$event = $this->generateEvents($dt, $dt->copy()->addDay());
  	 				
- 	 				$html .= $this->wraps['day'][0] . $dt->day . $this->wraps['day'][1];
- 	 				$html .= $this->generateEvents($dt, $dt->copy()->addDay());
+ 	 				if($event == '&nbsp;') {
+ 	 					
+ 	 					$html .= '<div'. $this->weekDayClass('day', $j) .'>' . $dt->day .'</div>';
+ 	 					
+ 	 				} else {
+ 	 					
+ 	 					$html .= $event;
+ 	 					
+ 	 				}
+ 	 				
+ 	 				$html .= $this->wraps['day'][1];
  	 				$dt->addDay();
  	 				
  	 			} else {
@@ -428,14 +449,15 @@ class Julius {
  	 }
  	 
  	 private function generateEvents($start_dt, $end_dt) {
+
+ 	 	$html = '&nbsp;';
  	 	
  	 	if(empty($this->events)) {
  	 		
- 	 		return '&nbsp;';
+ 	 		return $html;
  	 		
  	 	}
  	 	
- 	 	$html = '';
  	 	$events = [];
  	 	
  	 	foreach($this->events as $date => $event_values) {
@@ -475,25 +497,27 @@ class Julius {
  	 	
  	 }
  	 
- 	 private function dayLabelClass($week_day_no) {
+ 	 private function weekDayClass($class_name, $week_day_no) {
  	 	
- 	 	$day_label_class = '';
-
- 	 	if(isset($this->classes['day_label'])) {
- 	 			
- 	 		if(!is_array($this->classes['day_label'])) {
- 	 	
- 	 			$day_label_class = $this->generateClass($this->classes['day_label']);
- 	 	
- 	 		} else if(isset($this->classes['day_label'][$week_day_no])) {
-
- 	 			$day_label_class = $this->generateClass($this->classes['day_label'][$week_day_no]);
- 	 	
- 	 		}
- 	 			
+ 	 	if(!isset($this->classes[$class_name])) {
+ 	 		
+ 	 		return '';
+ 	 		
  	 	}
  	 	
- 	 	return $day_label_class;
+ 	 	$class = '';
+ 	 			
+		if(!is_array($this->classes[$class_name])) {
+ 	 	
+ 	 		$class = $this->generateClass($this->classes[$class_name]);
+ 	 	
+		} else if(isset($this->classes[$class_name][$week_day_no])) {
+
+			$class = $this->generateClass($this->classes[$class_name][$week_day_no]);
+ 	 	
+		}
+ 	 	
+ 	 	return $class;
  	 	
  	 }
  	 

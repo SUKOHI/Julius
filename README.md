@@ -42,7 +42,8 @@ Usage
 				'next' => 'btn', 
 				'day_label' => 'text-success', // You can use array like ['0' => 'sunday-class', '6' => 'saturday-class']
 				'today' => 'text-danger',
-				'year_month' => 'text-center'
+				'year_month' => 'text-center', 
+				'day' => 'text-muted', // You can use array like ['0' => 'sunday-class', '6' => 'saturday-class']
 		])
 		->setWraps([	// Set wrapers
 				'event' => ['<p>', '</p>'], 
@@ -58,7 +59,8 @@ Usage
 		->setInterval('+10 minutes')	// e.g.) +3 hours, +30minites etc...
 		->setEvents($events, $callback = function($events, $start_dt, $end_dt){	// Set events and its callback function(Callback is optional)
 			
-			$html =  '<pre>'. print_r($events, true) .'</pre>';
+			$html = '<div>'. $start_dt->day .'</div>';
+			$html .=  '<pre>'. print_r($events, true) .'</pre>';
 			$html .= '<pre>'. print_r($start_dt, true) .'</pre>';
 			$html .= '<pre>'. print_r($end_dt, true) .'</pre>';
 			return $html;
