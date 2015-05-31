@@ -447,7 +447,7 @@ class Julius {
 	private function generateLink($direction) {
 		
 		$dt = $this->base_dt->copy();
-		
+
 		if($this->mode == 'week') {
 		
 			($direction == 'prev') ? $dt->modify('last sunday') : $dt->modify('next sunday');
@@ -457,11 +457,11 @@ class Julius {
 			($direction == 'prev') ? $dt->subDay() : $dt->addDay();
 		
 		} else {
-		
-			($direction == 'prev') ? $dt->subMonth() : $dt->addMonth();
-		
+
+            $dt = ($direction == 'prev') ? $dt->modify('first day of previous month') : $dt->modify('first day of next month');
+
 		}
-		
+
 		$base_date = ($this->mode == 'month') ? $dt->format('Y-m') : $dt->format('Y-m-d');
 		$url = Request::url() .'?base_date='. $base_date .'&'. http_build_query(Input::except('base_date'));
 		$class = (isset($this->classes[$direction])) ? $this->generateClass($this->classes[$direction]) : '';
