@@ -372,8 +372,8 @@ class Julius {
 		$html = '';
 		$intervalMinutes = $this->getIntervalMinutes();
 
-		$start_dt = new Carbon($this->base_dt->format('Y-m-d') .' '. $this->hours['start']);
-		$end_dt = new Carbon($this->base_dt->format('Y-m-d') .' '. $this->hours['end']);
+		$start_dt = new Carbon($this->base_dt->toDateString() .' '. $this->hours['start']);
+		$end_dt = new Carbon($this->base_dt->toDateString() .' '. $this->hours['end']);
 		$block_count = $start_dt->diffInMinutes($end_dt) / $intervalMinutes;
 
 		for ($i = 0; $i < $block_count; $i++) {
@@ -491,7 +491,7 @@ class Julius {
 				
 				if($callback != null) {
 					
-					$events[$event_dt->format('Y-m-d H:i')] = $event_values;
+					$events[$event_dt->toDateTimeString()] = $event_values;
 					
 				} else {
 					
