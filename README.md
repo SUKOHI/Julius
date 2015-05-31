@@ -56,7 +56,7 @@ Usage
 		])
 		->setDayLabels(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'])	// Set week day names
 		->setMonthLabels(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])	// Set month names
-		->setInterval('+10 minutes')	// e.g.) +3 hours, +30minites etc...
+		->setInterval('+10 minutes')	// e.g.) +3 hours, +30 minutes etc...
 		->setEvents($events, $callback = function($events, $start_dt, $end_dt){	// Set events and its callback function(Callback is optional)
 			
 			$html = '<div>'. $start_dt->day .'</div>';

@@ -478,16 +478,18 @@ class Julius {
 			return $html;
 			
 		}
-		
+
+        $end_dt->subSecond();
+        $callback = $this->event_callback;
 		$events = [];
-		
+
 		foreach($this->events as $date => $event_values) {
 			
 			$event_dt = new Carbon($date);
 			
-			if($event_dt->between($start_dt, $end_dt->subSecond())) {
+			if($event_dt->between($start_dt, $end_dt)) {
 				
-				if($this->event_callback != null) {
+				if($callback != null) {
 					
 					$events[$event_dt->format('Y-m-d H:i')] = $event_values;
 					
@@ -506,12 +508,11 @@ class Julius {
 			}
 			
 		}
-		
-		if($this->event_callback != null && !empty($events)) {
-			
-			$callback = $this->event_callback;
-			$html = $callback($events, $start_dt, $end_dt);
-			
+
+		if($callback != null && is_callable($callback) && !empty($events)) {
+
+            $html = $callback($events, $start_dt, $end_dt);
+
 		}
 		
 		return $html;
