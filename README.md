@@ -24,7 +24,14 @@ Also
 
 Usage
 ====  
-
+    
+    $events = [
+        date('Y-m') .'-11 10:15:00' => ['Event 1', 'Event 2'],
+        date('Y-m') .'-09 10:26:00' => ['Event 3', '<strong>Event 4</strong>'],
+        date('Y-m') .'-07 14:12:23' => ['Event 5'],
+        date('Y-m') .'-15 12:39:00' => ['Event 6'],
+    ];
+    
 	$julius = Julius::make();
 	
 	/*  Optional Methods  */
