@@ -472,6 +472,7 @@ class Julius {
 		$base_date = ($this->mode == 'month') ? $dt->format('Y-m') : $dt->format('Y-m-d');
 		$url = Request::url() .'?base_date='. $base_date .'&'. http_build_query(Input::except('base_date'));
 		$class = (isset($this->classes[$direction])) ? $this->generateClass($this->classes[$direction]) : '';
+        $onclick = '';
 
         if(!empty($this->navigation_js_function)) {
 
