@@ -61,6 +61,7 @@ Usage
 				'prev' => '<span class="glyphicon glyphicon-arrow-left"></span> Prev', 
 				'next' => 'Next <span class="glyphicon glyphicon-arrow-right"></span>'
 		])
+		->setNavigationJsFunction('your_function_name')    // When using this method, the navigation icon link has onclick event. e.g) onclick="your_function_name(date)".
 		->setDayLabels(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'])	// Set week day names
 		->setMonthLabels(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])	// Set month names
 		->setInterval('+10 minutes')	// e.g.) +3 hours, +30 minutes etc...
