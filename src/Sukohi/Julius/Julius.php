@@ -10,7 +10,7 @@ class Julius {
 	private $navigation_flag = true;
 	private $day_of_week_flag = true;
 	private $navigation_bar_flag = true;
-	private $html = '';
+	private $html, $navigation_js_function = '';
 	private $mode = 'month';
 	private $interval = '+30 minutes';
 	private $hours, $events = [];
@@ -141,6 +141,13 @@ class Julius {
 		return $this;
 		
 	}
+
+    public function setNavigationJsFunction($js_function_name) {
+
+        $this->navigation_js_function = $js_function_name;
+        return $this;
+
+    }
 	
 	public function setDayLabels($labels) {
 		
@@ -465,7 +472,15 @@ class Julius {
 		$base_date = ($this->mode == 'month') ? $dt->format('Y-m') : $dt->format('Y-m-d');
 		$url = Request::url() .'?base_date='. $base_date .'&'. http_build_query(Input::except('base_date'));
 		$class = (isset($this->classes[$direction])) ? $this->generateClass($this->classes[$direction]) : '';
-		return '<a id="julius_'. $direction .'_'. $this->mode .'" href="'. $url .'"'. $class .' data-date="'. $base_date .'">'. $this->icons[$direction] .'</a>';
+
+        if(!empty($this->navigation_js_function)) {
+
+            $url = '#';
+            $onclick = ' onclick="'. $this->navigation_js_function .'(\''. $base_date .'\');"';
+
+        }
+
+		return '<a id="julius_'. $direction .'_'. $this->mode .'" href="'. $url .'"'. $class .' data-date="'. $base_date .'"'. $onclick .'>'. $this->icons[$direction] .'</a>';
 		
 	}
 	
