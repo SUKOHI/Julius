@@ -476,7 +476,7 @@ class Julius {
         if(!empty($this->navigation_js_function)) {
 
             $url = '#';
-            $onclick = ' onclick="'. $this->navigation_js_function .'(\''. $base_date .'\');"';
+            $onclick = ' onclick="return '. $this->navigation_js_function .'(\''. $base_date .'\');"';
 
         }
 
