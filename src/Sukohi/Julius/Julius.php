@@ -465,7 +465,7 @@ class Julius {
 		$base_date = ($this->mode == 'month') ? $dt->format('Y-m') : $dt->format('Y-m-d');
 		$url = Request::url() .'?base_date='. $base_date .'&'. http_build_query(Input::except('base_date'));
 		$class = (isset($this->classes[$direction])) ? $this->generateClass($this->classes[$direction]) : '';
-		return '<a href="'. $url .'"'. $class .'>'. $this->icons[$direction] .'</a>';
+		return '<a id="julius_'. $direction .'_'. $this->mode .'" href="'. $url .'"'. $class .' data-date="'. $base_date .'">'. $this->icons[$direction] .'</a>';
 		
 	}
 	
