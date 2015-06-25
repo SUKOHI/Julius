@@ -378,9 +378,9 @@ class Julius {
 		
 		$html = '';
 		$intervalMinutes = $this->getIntervalMinutes();
-
-		$start_dt = new Carbon($this->base_dt->toDateString() .' '. $this->hours['start']);
-		$end_dt = new Carbon($this->base_dt->toDateString() .' '. $this->hours['end']);
+        $hour_range_seconds = $this->getHourRangeSeconds($this->hours['start'], $this->hours['end']);
+        $start_dt = with(new Carbon($this->base_dt->toDateString()))->addSeconds($hour_range_seconds['start']);
+        $end_dt = with(new Carbon($this->base_dt->toDateString()))->addSeconds($hour_range_seconds['end']);
 		$block_count = $start_dt->diffInMinutes($end_dt) / $intervalMinutes;
 
 		for ($i = 0; $i < $block_count; $i++) {
@@ -416,9 +416,9 @@ class Julius {
 
 		$html = '';
 		$intervalMinutes = $this->getIntervalMinutes();
-		
-		$start_dt = new Carbon($this->base_dt->format('Y-m-d') .' '. $this->hours['start']);
-		$end_dt = new Carbon($this->base_dt->format('Y-m-d') .' '. $this->hours['end']);
+        $hour_range_seconds = $this->getHourRangeSeconds($this->hours['start'], $this->hours['end']);
+		$start_dt = with(new Carbon($this->base_dt->toDateString()))->addSeconds($hour_range_seconds['start']);
+        $end_dt = with(new Carbon($this->base_dt->toDateString()))->addSeconds($hour_range_seconds['end']);
 		$block_count = $start_dt->diffInMinutes($end_dt) / $intervalMinutes;
 		
 		for ($i = 0; $i < $block_count; $i++) {
@@ -442,6 +442,31 @@ class Julius {
 		$this->html .= $html;
 		
 	}
+
+    private function getHourSeconds($hour_string) {
+
+        list($hours, $minutes) = explode(':', $hour_string);
+        return $hours * 3600 + $minutes * 60;
+
+    }
+
+    private function getHourRangeSeconds($start_hour_string, $end_hour_string) {
+
+        $start_hour_seconds = $this->getHourSeconds($start_hour_string);
+        $end_hour_seconds = $this->getHourSeconds($end_hour_string);
+
+        if($start_hour_seconds > $end_hour_seconds) {
+
+            $end_hour_seconds += 86400;
+
+        }
+
+        return [
+            'start' => $start_hour_seconds,
+            'end' => $end_hour_seconds
+        ];
+
+    }
 	
 	private function getIntervalMinutes() {
 		
@@ -500,9 +525,27 @@ class Julius {
 		$events = [];
 
 		foreach($this->events as $date => $event_values) {
-			
-			$event_dt = new Carbon($date);
-			
+
+            try {
+
+                $event_dt = new Carbon($date);
+
+            } catch(\Exception $e) {
+
+                if(preg_match('|(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})|', $date, $matches)) {
+
+                    $year = $matches[1];
+                    $month = $matches[2];
+                    $day = $matches[3];
+                    $hour = $matches[4];
+                    $minute = $matches[5];
+                    $second = $matches[6];
+                    $event_dt = Carbon::create($year, $month, $day, $hour, $minute, $second);
+
+                }
+
+            }
+
 			if($event_dt->between($start_dt, $end_dt)) {
 				
 				if($callback != null) {

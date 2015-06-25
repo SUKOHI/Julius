@@ -30,6 +30,7 @@ Usage
         date('Y-m') .'-09 10:26:00' => ['Event 3', '<strong>Event 4</strong>'],
         date('Y-m') .'-07 14:12:23' => ['Event 5'],
         date('Y-m') .'-15 12:39:00' => ['Event 6'],
+        date('Y-m') .'-17 25:50:00' => ['Event 7'], // You can use times over 24:00
     ];
     
 	$julius = Julius::make();
@@ -40,7 +41,7 @@ Usage
 		->showNavigation(true)	// Show or hide the navigation
 		->showDayOfWeek(true)	// Show or hide the day of week for "week" or "day" mode.
 		->setMode(Input::get('mode'))	// month, week or day
-		->setHours('8:10', '18:20')	// Set the hour range for day and week mode
+		->setHours('8:10', '18:20')	// Set the hour range for day and week mode. And you can use times over 24:00
 		->setClasses([	// Set classes
 				'table' => 'table table-bordered', 
 				'header' => 'table-header', 
