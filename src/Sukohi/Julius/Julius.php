@@ -322,11 +322,11 @@ class Julius {
 			
 			for($j = 0; $j <= 6; $j++) {
 			
-				$today_class = ($dt->isToday()) ? $this->generateClass($this->classes['today']) : '';
-				$html .= '<td data-datetime="'. $dt->format('Y-m-d') .'"'. $today_class .'>';
-				$html .= $this->wraps['date'][0];
-				
 				if($dt->month == $this->base_dt->month && ($i > 0 || $j >= $start_week_day)) {
+
+                    $today_class = ($dt->isToday()) ? $this->generateClass($this->classes['today']) : '';
+                    $html .= '<td data-datetime="'. $dt->format('Y-m-d') .'"'. $today_class .'>';
+                    $html .= $this->wraps['date'][0];
 
 					$html .= $this->wraps['day'][0];
 					$event = $this->generateEvents($dt, $dt->copy()->addDay());
@@ -345,7 +345,9 @@ class Julius {
 					$dt->addDay();
 					
 				} else {
-					
+
+                    $html .= '<td>';
+                    $html .= $this->wraps['date'][0];
 					$html .= '&nbsp;';
 					
 				}
