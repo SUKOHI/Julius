@@ -75,7 +75,11 @@ Usage
 			return $html;
 			
 		})
-		->setDateFormats(['year_month' => 'm Y', 'time' => 'H:i']);	// Set date formats
+		->setDateFormats([  // Set date formats
+             'year_month' => 'm Y',
+             'day' => 'w j',
+             'time' => 'H:i'
+         ]);
     echo $julius->generate();
     
 License

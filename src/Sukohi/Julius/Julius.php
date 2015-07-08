@@ -32,7 +32,11 @@ class Julius {
 			];
 	private $month_labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	private $icons = ['prev' => '&lt;', 'next' => '&gt;'];
-	private $date_formats = ['year_month' => 'm Y', 'time' => 'g:ia'];
+	private $date_formats = [
+                'year_month' => 'm Y',
+                'day' => 'w j',
+                'time' => 'g:ia'
+            ];
 
 	public function __construct() {
 		
@@ -179,8 +183,17 @@ class Julius {
 	}
 	
 	public function setDateFormats($formats) {
-		
-		$this->date_formats = $formats;
+
+        foreach ($formats as $key => $format) {
+
+            if($this->date_formats[$key]) {
+
+                $this->date_formats[$key] = $format;
+
+            }
+
+        }
+
 		return $this;
 		
 	}
@@ -297,9 +310,13 @@ class Julius {
 				
 			}
 
+            $day_week_name = str_replace(['d', 'j', 'w'], [
+                str_pad($day, 2, '0', STR_PAD_LEFT),
+                $day,
+                $this->day_labels[$day_number]
+            ], $this->date_formats['day']);
 			$html .= '<td colspan="'. $col_span .'"'. $this->weekDayClass('day_label', $day_number) .'>';
-			$html .= $this->day_labels[$day_number] . ' ';
-			$html .= intval($day);
+			$html .= $day_week_name;
 			$html .= '</td>';
 			$day++;
 			
@@ -314,7 +331,6 @@ class Julius {
 		
 		$dt = $this->base_dt->copy()->firstOfMonth();
 		$start_week_day = ($dt->dayOfWeek == 0) ? 7 : $dt->dayOfWeek;
-		$end_day = $dt->copy()->lastOfMonth()->day;
 		$html = '<tr>';
 		$i_count = ($start_week_day == 7) ? 1 : 0;
 		
