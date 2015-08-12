@@ -122,7 +122,7 @@ To set calendar type. $str can be month, week or day.
 **setHours($start, $end)**
 
 To set the hour range for `day` and `week` mode.  
-You need to set time formatlike `00:00`, `10:25` for $start and $end.  
+You need to set time format like `00:00`, `10:25` for $start and $end.  
 You can set times over 24:00
 
 **setClasses($array)**
