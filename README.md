@@ -2,25 +2,37 @@ Julius
 ====
 
 A PHP package mainly developed for Laravel to manage calendar and events.  
-(This package was inspired by https://github.com/makzumi/laravel-calendar).  
-Thank you makzumi!
+(This package was inspired by [laravel-calendar
+](https://github.com/makzumi/laravel-calendar)).  
+Thank you makzumi!  
+(This is for Laravel 4.2. [For Laravel 5](https://github.com/SUKOHI/Julius))
 
-Installation&settings for Laravel
+Installation
 ====
 
-After installation using composer, add the followings to the array in  app/config/app.php
+Add this package name in composer.json
 
-    'providers' => array(  
+    "require": {
+      "sukohi/julius": "1.*"
+    }
+
+Execute composer command.
+
+    composer update
+
+Register the service provider in app.php
+
+    'providers' => [
         ...Others...,  
         'Sukohi\Julius\JuliusServiceProvider',
-    )
+    ]
 
-Also
+Also alias
 
-    'aliases' => array(  
+    'aliases' => [
         ...Others...,  
         'Julius' => 'Sukohi\Julius\Facades\Julius',
-    )
+    ]
 
 Usage
 ====  
