@@ -46,7 +46,7 @@ Usage
     
 **with Options**
 
-* See [Methods](#methods) for the details.  
+See [Methods](#methods) for the details.  
   
 
     $events = [
@@ -109,25 +109,25 @@ Methods<a name="methods"></a>
 
 **showNavigation($bool)**
 
-* Show or hide the navigation
+Show or hide the navigation
 
 **showDayOfWeek($bool)**
 
-* Show or hide the day of week for `week` or `day` mode.
+Show or hide the day of week for `week` or `day` mode.
 
 **setMode($str)**
 
-* To set calendar type. $str can be month, week or day.
+To set calendar type. $str can be month, week or day.
 
 **setHours($start, $end)**
 
-* To set the hour range for `day` and `week` mode.
-* You need to set time formatlike `00:00`, `10:25` for $start and $end.
-* You can set times over 24:00
+To set the hour range for `day` and `week` mode.  
+You need to set time formatlike `00:00`, `10:25` for $start and $end.  
+You can set times over 24:00
 
 **setClasses($array)**
 
-* To set class values like the below.
+To set class values like the below.
 
   
 	setClasses([
@@ -144,7 +144,7 @@ Methods<a name="methods"></a>
 
 **setWraps($array)**
 	
-* To set wrapers.
+To set wrapers.
 
 
 	setWraps([
@@ -155,7 +155,7 @@ Methods<a name="methods"></a>
 
 **setIcons($array)**
 
-* To set navigation icons. (You can use HTML tags)
+To set navigation icons. (You can use HTML tags)
 
 
 	setIcons([
@@ -165,21 +165,21 @@ Methods<a name="methods"></a>
 
 **setNavigationJsFunction($js_function_name)**
 
-* When using this method, the navigation icon link has onclick event like the below.
+When using this method, the navigation icon link has onclick event like the below.
 
 
 	onclick="js_function_name('2015-09')"
 
 **setDayLabels($array)**
 
-* To set week day names
+To set week day names
 
 
 	setDayLabels(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'])
 
 **setMonthLabels($array)**
 
-* To set month names.
+To set month names.
 
 
 	setMonthLabels([
@@ -199,11 +199,11 @@ Methods<a name="methods"></a>
 
 **setInterval($str)**
 
-* To set time step. $str can be +3 hours, +30 minutes etc...
+To set time step. $str can be +3 hours, +30 minutes etc...
 
 **setEvents($events, $closure)**
 
-* To set events and its callback(closure)
+To set events and its callback(closure)
 
 
 	setEvents($events, function($event, $start_dt, $end_dt){  
@@ -217,8 +217,8 @@ Methods<a name="methods"></a>
 
 **setDateFormats($array)**
    
-* To set date formats.
-* See [here](http://php.net/manual/en/function.date.php) for other date symbols.
+To set date formats.  
+See [here](http://php.net/manual/en/function.date.php) for other date symbols.
 
 
 	setDateFormats([
