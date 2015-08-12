@@ -1,16 +1,17 @@
 <?php namespace Sukohi\Julius;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\HTML;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
+
 class Julius {
 
-	private $base_dt, $event_callback = null;
-	private $navigation_flag = true;
-	private $day_of_week_flag = true;
-	private $navigation_bar_flag = true;
-	private $html, $navigation_js_function = '';
+	private $base_dt,
+			$event_callback = null;
+	private $navigation_flag,
+			$day_of_week_flag,
+			$navigation_bar_flag = true;
+	private $html,
+			$navigation_js_function = '';
 	private $mode = 'month';
 	private $interval = '+30 minutes';
 	private $hours, $events = [];
@@ -329,7 +330,9 @@ class Julius {
 	
 	private function generateBodyMonth() {
 		
-		$dt = $this->base_dt->copy()->firstOfMonth();
+		$dt = $this->base_dt
+				->copy()
+				->firstOfMonth();
 		$start_week_day = ($dt->dayOfWeek == 0) ? 7 : $dt->dayOfWeek;
 		$html = '<tr>';
 		$i_count = ($start_week_day == 7) ? 1 : 0;
@@ -343,7 +346,6 @@ class Julius {
                     $today_class = ($dt->isToday()) ? $this->generateClass($this->classes['today']) : '';
                     $html .= '<td data-datetime="'. $dt->format('Y-m-d') .'"'. $today_class .'>';
                     $html .= $this->wraps['date'][0];
-
 					$html .= $this->wraps['day'][0];
 					$event = $this->generateEvents($dt, $dt->copy()->addDay());
 					
@@ -513,7 +515,7 @@ class Julius {
 		}
 
 		$base_date = ($this->mode == 'month') ? $dt->format('Y-m') : $dt->format('Y-m-d');
-		$url = Request::url() .'?base_date='. $base_date .'&'. http_build_query(Input::except('base_date'));
+		$url = Request::url() .'?base_date='. $base_date .'&'. http_build_query(Request::except('base_date'));
 		$class = (isset($this->classes[$direction])) ? $this->generateClass($this->classes[$direction]) : '';
         $onclick = '';
 

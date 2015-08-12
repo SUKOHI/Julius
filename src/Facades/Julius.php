@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Facade;
 
 class Julius extends Facade {
 
-	protected static function getFacadeAccessor() { return 'julius'; }
+	protected static function getFacadeAccessor() {
+
+		return 'julius';
+
+	}
 
 }

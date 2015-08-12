@@ -1,24 +1,19 @@
 {
     "name": "sukohi/julius",
-    "description": "",
+    "description": "A PHP package mainly developed for Laravel to manage calendar and events.",
     "authors": [
         {
             "name": "Sukohi",
             "email": "capilano.sukohi@gmail.com"
         }
     ],
-    "license": "MIT", 
-    "version": "1.0.0",
+    "license": "MIT",
     "require": {
-        "php": ">=5.4.0",
-        "illuminate/support": "4.2.*"
+        "laravel/framework": "~5.0"
     },
     "autoload": {
-        "classmap": [
-            "src/migrations"
-        ],
-        "psr-0": {
-            "Sukohi\\Julius\\": "src/"
+        "psr-4": {
+            "Sukohi\\Menco\\": "src/"
         }
     },
     "minimum-stability": "stable"
