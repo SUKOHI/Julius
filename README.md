@@ -47,7 +47,7 @@ Usage
 **with Options**
 
 * See [Methods](#methods) for the details.  
-
+  
 
     $events = [
         date('Y-m') .'-11 10:15:00' => ['Event 1', 'Event 2'],
