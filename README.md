@@ -46,7 +46,7 @@ Usage
     
 **with Options**
 
-* See [Methods](#methods) for the details.
+* See [Methods](#methods) for the details.  
 
 
     $events = [
@@ -201,7 +201,7 @@ Methods<a name="methods"></a>
 
 * To set time step. $str can be +3 hours, +30 minutes etc...
 
-**setEvents($events, $closure)
+**setEvents($events, $closure)**
 
 * To set events and its callback(closure)
 
@@ -215,7 +215,7 @@ Methods<a name="methods"></a>
 	
 	// $start_dt and $end_dt are Carbon object.
 
-**setDateFormats($array)
+**setDateFormats($array)**
    
 * To set date formats.
 * See [here](http://php.net/manual/en/function.date.php) for other date symbols.
