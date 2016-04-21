@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Sukohi\\Menco\\": "src/"
+            "Sukohi\\Julius\\": "src/"
         }
     },
     "minimum-stability": "stable"
